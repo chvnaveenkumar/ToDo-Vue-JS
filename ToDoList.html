@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ToDoList Using Vue JS</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.10/lodash.core.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <input type="text" v-model="userInput">
+        <button v-on:click="addTodo"> Add Todo</button>
+        <ul>
+            <li v-for="todo in todos" v-on:click="removeTodo(todo)">
+                {{ todo.value }}
+            </li>
+        </ul>
+    </div>
+</body>
+<script>
+    new Vue({
+        el:'#app', //el property
+        data:{
+             todos:[],
+             userInput: '',
+        },
+        methods: {
+            addTodo: function(){
+                if(this.userInput.trim() == ''){
+                    return;
+                }
+                var newToDo = {
+                    id: _.uniqueId(),
+                    value: this.userInput
+                };
+                this.todos.push(newToDo);
+                console.log(this.todos);
+            },
+            removeTodo(todo){
+                var id = todo.id;
+                for(var i=0;i< this.todos.length;i++){
+                    if(this.todos[i].id == id)
+                    {
+                        this.todos.splice(i,1);
+                        break;
+                    }
+                }
+            }
+        }
+    });
+</script>
+</html>
